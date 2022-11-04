@@ -36,9 +36,8 @@ def get_all_doc_versions(context, url=None):
     """
     lang = context.get('lang', 'en')
     versions = []
-
     # Look for each version of the docs.
-    for release in DocumentRelease.objects.filter(lang=lang):
+    for release in DocumentRelease.objects.filter(lang=lang).select_related():
         version_root = get_doc_root(release.lang, release.version)
         if version_root.exists():
             doc_path = get_doc_path(version_root, url)
